@@ -2,6 +2,8 @@ GenticRL
 a mostly-incomplete 7drl experiment by Jake Eakle
 with much assistance by Nasa Sinott-Armstrong
 
+requires python & numpy
+
 The idea behind GeneticRL is to strip the player of all agency in the
 game world itself. I mean, you wouldn't really want it anyway, it's a
 really boring roguelike. The enemies don't even move!

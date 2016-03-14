@@ -1,0 +1,90 @@
+GenticRL
+a mostly-incomplete 7drl experiment by Jake Eakle
+with much assistance by Nasa Sinott-Armstrong
+
+The idea behind GeneticRL is to strip the player of all agency in the
+game world itself. I mean, you wouldn't really want it anyway, it's a
+really boring roguelike. The enemies don't even move!
+
+Instead, in a completed version of this game, you would build up and
+fine-tune a genetic algorithm to eventually evolve an AI player that
+can complete the game. You would do this by running a bare-bones
+genetic algorithm, which will produce an adventurer that runs around a
+bit and then probably dies, but maybe collects some resources.
+
+One of these, currently called 'meta' in the code, could then be spent
+on upgrades to the fitness function, the generation size, the way
+individuals are passed on from one generation to the next, and other
+parameters of the algorithm. Each time, the algorithm will hopefully
+produce a better adventurer, and you'll collect more meta-resource,
+and quickly evolve a skilled adventurer.
+
+However, this dream was largely unrealized in the.. I guess like
+three-ish days I actually worked on it. What is here:
+
+* an adventurer class with some basic stats
+
+* a simple world model, with a 12x12 grid, stationary enemies, items,
+  & consumables. There's not yet any notion of going downstairs, but
+  you can generate deeper floors where the numbers are bigger.
+
+* a framework for evolvable adventurers, whose 'genes' influence the
+weights on movement options based on what kind of entity is in a
+specific cell relative to the manhattan-distance 2 diamond centered on
+the player
+
+* a simple, fairly easily customizable genetic algorithm, with three parts:
+
+  * run() takes an adventurer and simulates in the world model until
+    it runs out of energy or dies.
+
+  * generation() takes a set of adventurers, calls run() on them some
+    number of times, and maps them to the average result of the
+    user-provided fitness function on the post-run adventurer
+
+  * next_gen() takes such a mapping and produces a descendent
+    generation, via the following operations:
+
+    * unchanged: passes through the top n adventurers by fitness to
+      the next generation
+
+    * mated: picks two adventurers, weighted by fitness, and produces
+      a novel third adventurer by, for each corresponding pair of
+      genes in the parents, interpolating their values to a point from
+      the beta distribution on the square roots of the parents'
+      fitnesses. This basically means that the child's value is likely
+      to be closer to the fitter parent's.
+
+    * mutated: picks an adventurer, weighted by fitness, and produces
+      a child adventurer by randomly tweaking all its values by
+      amounts drawn from a normal distribution with the user-supplied
+      standard deviation.
+
+    * random: creates novel adventurers at random.
+
+To the extent that there is a playable game here, it is this: at the
+bottom of evolve.py, you will find a "sources" dict with ?s for the
+values. Fill those in, set the first two arguments to trial() to the
+generation count and fitness confidence you want (on my crappy laptop,
+trials with 32, 32 ran in time measurable in minutes; ymmv), and run
+it. Eventually, you'll see how successful of an adventurer you
+evolved! You can also tweak the default_fitness() function, though
+that will require understanding the code a bit more. Try to find
+parameters such that your guy wins most of the time! Whee! A fun game!
+
+If there is any interest in this, or possibly even if there isn't,
+I'll eventually build out the meta-resource system and a tolerable
+interface to the results of evolution and the tweaks you can make. For
+now, this is *really* esoteric, and probably not very interesting to
+most people. But if it is interesting to you, and gives you exciting
+ideas, please tell me them! I did this because this idea is very
+exciting to me in the abstract, and I wanted to see if something
+actually fun could fall out of it if I just went ahead and made it. So
+far the answer is a resounding "sure doesn't seem like it yet, but
+it's far too soon to tell." I mean, I enjoyed trying to guess what
+parameters would be good and then comparing a bunch and finding out I
+was wrong. But then, I wrote the damn thing :P
+
+Enjoy!
+
+Jake

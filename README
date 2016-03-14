@@ -70,7 +70,8 @@ trials with 32, 32 ran in time measurable in minutes; ymmv), and run
 it. Eventually, you'll see how successful of an adventurer you
 evolved! You can also tweak the default_fitness() function, though
 that will require understanding the code a bit more. Try to find
-parameters such that your guy wins most of the time! Whee! A fun game!
+parameters such that your adventurer wins most of the time! Whee! 
+A fun game!
 
 If there is any interest in this, or possibly even if there isn't,
 I'll eventually build out the meta-resource system and a tolerable
